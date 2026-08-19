@@ -1,0 +1,3 @@
+hhmmss,id,Slav,noAns,crc,AnswEC,LastEC,LastRqSiz,LastRsSiz,noErr,status
+20260819161917,32,80,5,0,0,0,29,8,16086,CORRECT
+20260819161922,33,81,5,0,0,0,41,8,16092,CORRECT
