@@ -27,7 +27,7 @@ function dt2ys(d){var s,m,e;s=d.getFullYear();m=d.getMonth()+1;if(m<10)s+='0'+m;
 function dp2fn(d,p){return 'SisGwNG_port'+p+'.txt'}//return dt2ys(d)+'_SisGwNG_MbSlaves_port'+p+'.txt';}
 function csv2jn(csv){var i,j,s,hs,res=[],Ls=csv.split("\n");s=Ls[0];hs=s.split(",");//s=s.substring(0,s.length-1);
     for(i=1;i<Ls.length;i++){var o={};s=Ls[i].split(",");for(j=0;j<hs.length;j++){o[hs[j]]=s[j];} res.push(o);} return res;}    
-function hms2tims(hms){return hms.substring(8,10)+':'+hms.substring(10,12)+':'+hms.substring(12,14)}
+function hms2tims(hms){return hms;}//hms.substring(8,10)+':'+hms.substring(10,12)+':'+hms.substring(12,14)}
 function mbRtuSlaveStatus(id,ad){var s="id"+id+" slave"+ad+" ",r,rr=jnRs.length-1;
     if(0<rr){for(r=rr-1;0<=r;r--){if(ad==jnRs[r]['Slav']){s+=jnRs[r]['status'];break;}} return s;}}
 function spDiagUpd(sp,ids,slavs){var rr=jnRs.length-1;if(rr<1)return;
