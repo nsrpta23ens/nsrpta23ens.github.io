@@ -1,0 +1,62 @@
+<!--MLw26moni.htm 2026july26su@LvL 2026au24mo@MLw tnhan@enersev k605=800x480ps ,initial-scale=1.0" onload='rCSVfile();ini1();'-->
+<!doctype html><html><head><title>MLw26monitor</title><meta charset='utf-8'><!--meta name="viewport" content="width=device-width"-->
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" /><meta http-equiv="Expires" content="-1" />
+<style>body{background:lightgray;font-family:arial;margin:0px 0px 0px 0px;overflow:hidden;}
+div{margin:0px 0px 0px 0px;padding:2px 0px 2px 0px;border:1px solid silver;background:lightgray;}
+table,td{border:1px solid gray;border-collapse:collapse;padding:3px;}
+.tdRWp{background:Burlywood;}   .tdCWp{background:CornflowerBlue;}  .tdTAp{background:SkyBlue;}  .tdBPY{background:SkyBlue;} 
+</style></head><body oncontextmenu='return false;' onload='ini1();'>
+<div style='padding:2px 2px 2px 2px;'><span style='font-size:large;'><b>HỆ THỐNG QUAN TRẮC NƯỚC THÔ</b></span><br>
+                                      <span style='font-size:small;'>CTCP CẤP NƯỚC MÊ LINH (c)2026aug ENERSEV</span><br>
+                                      <span style='font-weight:bold;' id='spUpdtime'>YYYYMMDD hhmmss</span></div>
+<div style='font-family:consolas;width:400px;'>
+    <div id=divPm0 style='border:1px solid lightgray;white-space:nowrap;width:1%;background:Burlywood;'>     FLOW</div>
+    <div id=divPm1 style='border:1px solid lightgray;white-space:nowrap;width:1%;background:skyblue;'>       TSS</div>
+    <div id=divPm2 style='border:1px solid lightgray;white-space:nowrap;width:1%;background:CornflowerBlue;'>COD</div>
+    <div id=divPm3 style='border:1px solid lightgray;white-space:nowrap;width:1%;background:LightCoral;'>    NH3-N</div>
+    <div id=divPm4 style='border:1px solid lightgray;white-space:nowrap;width:1%;background:LightSeaGreen;'> LDO</div>
+    <div id=divPm5 style='border:1px solid lightgray;white-space:nowrap;width:1%;background:DeepSkyBlue;'>   pH</div>
+    <div id=divPm6 style='border:1px solid lightgray;white-space:nowrap;width:1%;background:Goldenrod;'>     Temp</div></div>
+<textarea id='taLfYMDh' readonly rows=9 cols=52></textarea>
+<!--div style='width:800px;height:800px;background:lightgray;border:none;'>
+<div id='divVBarHrsPMs' style='font-family:Consolas;white-space:nowrap;display:flex;flex-direction:row;position:absolute;left:0px;top:200px;width:800px;height:200px;border:none;color:gray'>
+    <div id='divVBarHr0' style='width:56px;display:flex;flex-direction:row;align-items:flex-end;'>
+        <div id='divVBarHr0pm0' style='width:8px;height:10%;background:Burlywood'>F</div><div id='divVBarHr0pm1' style='width:8px;height:20%;background:tomato'>T</div></div>
+    <div id='divVBarHr1' style='width:56px;'>1h</div></div>
+<div id='divHBarHrsPMs' style='font-family:Consolas;white-space:nowrap;display:flex;flex-direction:column;position:absolute;left:596px;top:0px;width:200px;border:none;'>
+<div id='divHBar1' style='border:none;width:70%;background:Burlywood;'>FLOW_in1 789m3h</div><div id='divHBar2' style='border:none;width:30%;background:tomato;color:dimgray;'>Temp 34.5°C</div></div></div>
+</div--></body><script>
+const sPMname=['Flow in 1 = ','TSS' ,'COD' ,'NH4+','DO' ,'pH','Temp'],nHrs=3;nPMs=3;sPMsBgColor=['Burlywood','tomato','skyblue'];
+const sPMunit=['m3/h'   ,'mg/L','mg/L','mg/L' ,'mg/L','pH','°C'];
+const nPMmax =[1000     ,1000  ,1000  ,1000   ,20    , 14 ,100]
+function divNewVBarPm(id,tit,bgc,h,l){var d=document.createElement('div');d.id=id;d.style.width=20+'px';d.style.border='none';d.style.background=bgc;d.textContent='-';d.style.height=h+'px';d.style.top=(200-h)+'px';d.style.left=l+'px';d.style.position='absolute';return d;}
+function divNewHBarPm(id,tit,bgc,w){  var d=document.createElement('div');d.id=id;d.style.width=w;      d.style.border='none';d.style.background=bgc;d.textContent=tit;return d;}//d.style.textAlign='left';
+function divNewVBarPMs(pd){var i=0,d,p;   p=document.getElementById(pd);for(;i<nPMs;i++){d=divNewVBarPm(p.id+'pm'+i,sPMs[i],sPMsBgColor[i],(i+1)*20,i*20);p.appendChild(d);}}
+function divNewHBarPMs(pd){var i=0,d,p;   p=document.getElementById(pd);for(;i<nPMs;i++){d=divNewHBarPm(p.id+'pm'+i,sPMs[i],sPMsBgColor[i],(i+1)*10+'%'); p.appendChild(d);}}
+function divNewHBarHr(id,tit,txc){    var d=document.createElement('div');d.id=id;d.style.width='100%'; d.style.color=txc;return d;}//d.style.textAlign='right';d.textContent=tit;d.style.border='1px solid silver';
+function divNewVBarHr(id,tit,txc){    var d=document.createElement('div');d.id=id;d.style.width='100px';d.style.color=txc;d.style.height='100%';return d;}//d.style.flexDirection='row';
+function divNewVBarHrs(pd){var i=0,d,c,p; p=document.getElementById(pd);for(;i<nHrs;i++){c='dimgray';if(i==nHrs-1)c='black';d=divNewVBarHr('divVBarHr'+i,i+'h',c);p.appendChild(d);divNewVBarPMs(d.id);}}
+function divNewHBarHrs(pd){var i=0,d,c,p; p=document.getElementById(pd);for(;i<nHrs;i++){c='dimgray';if(i==nHrs-1)c='black';d=divNewHBarHr('divHBarHr'+i,i+'h',c);p.appendChild(d);divNewHBarPMs(d.id);}}
+function dtNow2ymdh(){return "HN_MELI_NUOML1_PMsCur.txt";//2026au31mo@e77
+    const d=new Date(),yyyy=d.getFullYear(),mm=String(d.getMonth()+1).padStart(2,'0'),dd=String(d.getDate()).padStart(2,'0'),hh=String(d.getHours()).padStart(2,'0');
+    return `HN_MELI_NUOML1_${yyyy}${mm}${dd}${hh}cur.txt`;}
+function updtime(ut){var d=document.getElementById('spUpdtime');d.textContent=ut.substring(6,8)+'-'+ut.substring(4,6)+'-'+ut.substring(0,4)+'   '+ut.substring(8,10)+':'+ut.substring(10,12)+':'+ut.substring(12,14);}
+function divPMp(v,max){return Math.round(v*100.0/max);}
+function parsePMv(s){const w=s.split('\t');return w[1];}
+function parsePMt(s){const w=s.split('\t');return w[3];}
+function parsePMs(ss){const Lines=ss.split(/\r?\n/);//console.log(Lines);
+    var i,n=Lines.length,d,v,ut;
+    for(i=0;i<n-1;i++){v=parsePMv(Lines[i]);    if(i==0){ut=parsePMt(Lines[i]);updtime(ut);}
+        d=document.getElementById('divPm'+i);d.innerHTML=sPMname[i]+' '+v+' '+sPMunit[i];d.style.width=divPMp(v,nPMmax[i])+'%';}}
+async function fetchLfYMDh(){
+  try{var fn=dtNow2ymdh();const res=await fetch(fn);                //1-sendNetworkReq
+    if(!res.ok){throw new Error(`HTTPerr Status:${res.status}`);}   //2-check if HTTPstatus is200-299
+    //const data=await res.json();console.log(data);                //3-parseStreamingBodyData in2json
+    var tv=await res.text(),ta=document.getElementById('taLfYMDh');ta.value=fn+'\r'+tv;parsePMs(tv);
+  }catch(err){console.error('Fetch failed:',err.message);}}
+async function upd(){//var ta=document.getElementById('taLfYMDh');ta.value=dtNow2ymdh();
+    await fetchLfYMDh();}//divNewHBarHrs('divHBarHrsPMs');}//divNewVBarHrs('divVBarHrsPMs');}
+function ini1(){setInterval(upd,6000);}
+</script></html>

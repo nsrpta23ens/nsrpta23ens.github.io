@@ -1,7 +1,9 @@
 #2026july23thu tnhan@enersev MLw26mbrtuMs.py 2026au23su@MLw HN_MELI_NUOML1_20260716110000.txt
 import os;import sys;import struct;import time;from datetime import datetime;import serial;from pathlib import Path #2026au23su@MLw
 def i420ma2pv(b2): #2026au24mo@MLwTramBomRedRiver
-    i=int.from_bytes(b2,byteorder='big');return (float(i)-400)/1.6
+    i=int.from_bytes(b2,byteorder='big');f=(float(i)-400)/1.6
+    if f<0:f=0 #2026au31mo@e77
+    return f 
 def cdab2float(ab):
     cd=ab[2:4]+ab[0:2];return struct.unpack('>f',cd)[0]	#unpack as a32biFloat
 def rs2pv(rs,i):
@@ -44,7 +46,7 @@ while True:
         if os.path.exists(fn)==False:
             with open(fn,"a") as f:f.write(pmsHead()+"\n")
         with open(fn,"a") as f:    f.write(pmsVals(dt,fPMvalu)+"\n")#
-        fn=fc=sCWD+sFNprefix+"_"+dt.strftime("%Y%m%d%H");fn+=".txt";fc+="cur.txt" #"0000.txt"
+        fn=fc=sCWD+sFNprefix+"_";fn+=dt.strftime("%Y%m%d%H")+".txt";fc+="PMsCur.txt" #"0000.txt"
         if sFn2sv!="" and os.path.exists(fn)==False:
             nPMcnt[i]=0;fPMsum[i]=0;upLf2sv(sFn2sv,dt2sv) #print(sFn2sv+" up2sv"+dt2sv.strftime("%Y%m%d%H%M%S"));
         sFn2sv=fn;dt2sv=dt;ss="";sc=""
