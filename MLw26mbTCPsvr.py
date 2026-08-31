@@ -7,7 +7,7 @@ def updRegs():#print("BackgroundThread started.modifying inRegs..")
         #DataBank.set_list_words(0,[dt.second]) #,humi]) #print(f"[SvrStatus]updRegs:Temp={temp}°C,Humid={humi}%")
         with open("/home/pi/HN_MELI_NUOML1/HN_MELI_NUOML1_PMsCur.txt","r") as f: #HN_MELI_NUOML1_PMsCur.txt
             Line=f.readline();m3h=int(Line.split("\t")[1])
-        MBtcpSvr.data_bank.set_input_registers(0,[m3h]);time.sleep(3)
+            MBtcpSvr.data_bank.set_input_registers(0,[m3h]);time.sleep(3)
 if __name__ == "__main__":
     try:
         updThread=threading.Thread(target=updRegs,daemon=True);updThread.start()
