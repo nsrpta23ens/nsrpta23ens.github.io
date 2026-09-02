@@ -48,7 +48,8 @@ while True:
         with open(fn,"a") as f:    f.write(pmsVals(dt,fPMvalu)+"\n")#
         fn=fc=sCWD+sFNprefix+"_";fn+=dt.strftime("%Y%m%d%H")+".txt";fc+="PMsCur.txt" #"0000.txt"
         if sFn2sv!="" and os.path.exists(fn)==False:
-            nPMcnt[i]=0;fPMsum[i]=0;upLf2sv(sFn2sv,dt2sv) #print(sFn2sv+" up2sv"+dt2sv.strftime("%Y%m%d%H%M%S"));
+            upLf2sv(sFn2sv,dt2sv) #print(sFn2sv+" up2sv"+dt2sv.strftime("%Y%m%d%H%M%S"));
+            for i in range(np):nPMcnt[i]=0;fPMsum[i]=0 #2026se2we@LvL
         sFn2sv=fn;dt2sv=dt;ss="";sc=""
         for i in range(np):
             nPMcnt[i]+=1;fPMsum[i]+=fPMvalu[i];fPMavg[i]=fPMsum[i]/nPMcnt[i]
