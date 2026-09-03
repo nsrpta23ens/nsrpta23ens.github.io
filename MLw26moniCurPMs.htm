@@ -31,16 +31,16 @@ function dt2ymdFw(dt){
     const y=dt.getFullYear(),mm=String(dt.getMonth()+1).padStart(2,'0'),dd=String(dt.getDate()).padStart(2,'0'),hh=String(dt.getHours()).padStart(2,'0');
     return `HN_MELI_NUOML1_${y}${mm}${dd}flowin.txt`;}
 function flowSumDay(fwHrs,est24){var fws=0,ss=fwHrs.split(/\r?\n/),i,n=ss.length-1;  if(n<1)return 0;
-    for(i=0;i<n;i++)fws+=parseInt(ss[i].split('\t')[1],10);     if(0<est24 && 0<n)fws=fws*24/n;return fws;}
+    for(i=0;i<n;i++)fws+=parseInt(ss[i].split('\t')[1]);     if(0<est24 && 0<n)fws=fws*24/n;return Math.round(fws);}//fws+=parseInt(ss[i].split('\t')[1],10);
 function updtime(ut){var d=document.getElementById('spUpdtime');d.textContent=ut.substring(6,8)+'-'+ut.substring(4,6)+'-'+ut.substring(0,4)+'   '+ut.substring(8,10)+':'+ut.substring(10,12)+':'+ut.substring(12,14);}
 function divPMp(v,max){return Math.round(v*100.0/max);}
 function parsePMv(s){const w=s.split('\t');return w[1];}
 function parsePMt(s){const w=s.split('\t');return w[3];}
 function parsePMs(ss){var Lines=ss.split(/\r?\n/),i,n=Lines.length,d,v,s="",ut;
     for(i=0;i<n-1;i++){v=parsePMv(Lines[i]);    if(i==0){ut=parsePMt(Lines[i]);updtime(ut);}
-        s=sPMname[i]+' '+v+' '+sPMunit[i];      if(i==0)s+="<br>TổngLL h.qua="+nFlow1sum+"m3   TổngLL h.nay="+nFlow0sum+"m3";
+        s=sPMname[i]+' '+v+' '+sPMunit[i];      if(i==0)s+="<br>TổngLL h.qua="+nFlow1sum+"m3   h.nay="+nFlow0sum+"m3";
         d=document.getElementById('divPm'+i);d.innerHTML=s;d.style.width=divPMp(v,nPMmax[i])+'%';}}
-async function fetchLogFiles(){try{var fw,fn="HN_MELI_NUOML1_PMsCur.txt",rs,tv,d0,dq;d0=new Date();d1=new Date();d1=d0.setDate(d0.getDate()-1);
+async function fetchLogFiles(){try{var fw,fn="HN_MELI_NUOML1_PMsCur.txt",rs,tv,d0,dq;d0=new Date();d1=new Date(Date.now()-86400000);//new Date();d1=d0.setDate(d0.getDate()-1);
     fw=dt2ymdFw(d0);rs=await fetch(fw);if(!rs.ok){throw new Error(`HTTPerrStatus:${rs.status}`);}tv=await rs.text();nFlow0sum=flowSumDay(tv,0);
     fw=dt2ymdFw(d1);rs=await fetch(fw);if(!rs.ok){throw new Error(`HTTPerrStatus:${rs.status}`);}tv=await rs.text();nFlow1sum=flowSumDay(tv,1);
                     rs=await fetch(fn);if(!rs.ok){throw new Error(`HTTPerrStatus:${rs.status}`);} //1-sendNetworkReq 2-check ifHTTPstatus's200-299
